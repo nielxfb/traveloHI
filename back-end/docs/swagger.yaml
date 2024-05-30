@@ -1,0 +1,349 @@
+basePath: /api
+definitions:
+  models.Bank:
+    properties:
+      bankID:
+        type: string
+      bankName:
+        type: string
+      creditCards:
+        items:
+          $ref: '#/definitions/models.CreditCard'
+        type: array
+    type: object
+  models.CartFlightTicket:
+    properties:
+      cartID:
+        type: string
+      flight:
+        $ref: '#/definitions/models.Flight'
+      flightID:
+        type: string
+      seatNumber:
+        type: integer
+      userID:
+        type: string
+    type: object
+  models.CartHotelTicket:
+    properties:
+      cartID:
+        type: string
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      hotel:
+        $ref: '#/definitions/models.Hotel'
+      hotelID:
+        type: string
+      roomType:
+        $ref: '#/definitions/models.RoomType'
+      roomTypeID:
+        type: string
+      userID:
+        type: string
+    type: object
+  models.CreditCard:
+    properties:
+      bank:
+        $ref: '#/definitions/models.Bank'
+      bankID:
+        type: string
+      cardNumber:
+        type: string
+      cvv:
+        type: string
+      expiredMonth:
+        type: integer
+      expiredYear:
+        type: integer
+      id:
+        type: string
+      userID:
+        type: string
+    type: object
+  models.Flight:
+    properties:
+      airlineCode:
+        type: string
+      airlineNumber:
+        type: string
+      arrivalTime:
+        type: string
+      cartFlights:
+        items:
+          $ref: '#/definitions/models.CartFlightTicket'
+        type: array
+      departureTime:
+        type: string
+      destinationAirportCode:
+        type: string
+      flightID:
+        type: string
+      originAirportCode:
+        type: string
+      price:
+        type: number
+      reservedSeats:
+        items:
+          $ref: '#/definitions/models.ReservedSeat'
+        type: array
+      seatTotal:
+        type: integer
+    type: object
+  models.Hotel:
+    properties:
+      ac:
+        type: boolean
+      cartHotels:
+        items:
+          $ref: '#/definitions/models.CartHotelTicket'
+        type: array
+      description:
+        type: string
+      elevator:
+        type: boolean
+      hotelID:
+        type: string
+      hotelName:
+        type: string
+      imageLink:
+        type: string
+      location:
+        $ref: '#/definitions/models.Location'
+      locationID:
+        type: string
+      restaurant:
+        type: boolean
+      reviews:
+        items:
+          $ref: '#/definitions/models.Review'
+        type: array
+      roomTypes:
+        items:
+          $ref: '#/definitions/models.RoomType'
+        type: array
+      swimmingPool:
+        type: boolean
+      wiFi:
+        type: boolean
+    type: object
+  models.Location:
+    properties:
+      address:
+        type: string
+      cityName:
+        type: string
+      countryName:
+        type: string
+      locationID:
+        type: string
+    type: object
+  models.ReservedSeat:
+    properties:
+      flightID:
+        type: string
+      seatID:
+        type: string
+      seatNumber:
+        type: integer
+    type: object
+  models.Review:
+    properties:
+      hotelID:
+        type: string
+      isAnonymous:
+        type: boolean
+      rating:
+        type: number
+      reviewDesc:
+        type: string
+      reviewID:
+        type: string
+      reviewType:
+        $ref: '#/definitions/models.ReviewType'
+      reviewTypeID:
+        type: string
+      userID:
+        type: string
+    type: object
+  models.ReviewType:
+    properties:
+      reviewType:
+        type: string
+      reviewTypeID:
+        type: string
+    type: object
+  models.RoomType:
+    properties:
+      cartRooms:
+        items:
+          $ref: '#/definitions/models.CartHotelTicket'
+        type: array
+      hotelID:
+        type: string
+      imageLink:
+        type: string
+      price:
+        type: number
+      roomType:
+        type: string
+      roomTypeID:
+        type: string
+      stock:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      address:
+        type: string
+      creditCards:
+        items:
+          $ref: '#/definitions/models.CreditCard'
+        type: array
+      dob:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      flightCarts:
+        items:
+          $ref: '#/definitions/models.CartFlightTicket'
+        type: array
+      gender:
+        type: string
+      hotelCarts:
+        items:
+          $ref: '#/definitions/models.CartHotelTicket'
+        type: array
+      id:
+        type: string
+      isBanned:
+        type: boolean
+      lastName:
+        type: string
+      loggedIn:
+        type: boolean
+      otpcode:
+        type: string
+      otpcreatedAt:
+        type: string
+      password:
+        type: string
+      phoneNumber:
+        type: string
+      profilePictureLink:
+        type: string
+      role:
+        type: string
+      subscribe:
+        type: boolean
+      walletBalance:
+        type: number
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: API Documentation for Web Programming TPA 23-2.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: TraveloHI API Documentation
+  version: "1.0"
+paths:
+  /delete-user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete user
+      tags:
+      - User
+  /fetch-questions:
+    post:
+      consumes:
+      - application/json
+      description: Fetch security questions
+      parameters:
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: integer
+            type: array
+      summary: Fetch security questions
+      tags:
+      - User
+  /logout:
+    put:
+      consumes:
+      - application/json
+      description: Log out user
+      parameters:
+      - description: ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Log out user
+      tags:
+      - User
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+      summary: Get all users
+      tags:
+      - User
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
